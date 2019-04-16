@@ -24,4 +24,4 @@
 
 ------
 
-[贡献者名单](wiki) 欢迎大家加入
+[贡献者名单](https://github.com/BeaconForUs/Mobile-Knowledge-Roadmap/wiki/贡献者名单) 欢迎大家加入
