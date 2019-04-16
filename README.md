@@ -9,6 +9,3 @@
 
 ## Gitbook（需要科学上网）
 为方便阅读，我们将不定期的更新内容到[Gitbook](https://beacon-1.gitbook.io/mobile-knowledge-roadmap/)，以及Gitbook的[PDF]()版本（嗯...现在还没有）
-
-## 贡献者
-[贡献者名单](https://github.com/BeaconForUs/Mobile-Knowledge-Roadmap/wiki/贡献者名单) 欢迎大家加入
