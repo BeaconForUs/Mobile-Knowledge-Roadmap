@@ -13,7 +13,7 @@
     - [ ] 绘图
 - [ ] Core Animation
     - [ ] CABasicAnimation
-    - [ ] CAKryFrameAnimation
+    - [ ] CAKeyFrameAnimation
     - [ ] CAAnimationGroup
     - [ ] CADisplayLink
     - [ ] 交互动画
