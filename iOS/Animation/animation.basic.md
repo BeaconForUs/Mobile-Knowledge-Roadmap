@@ -60,11 +60,16 @@ CALayer比较常用的属性如下（有落下的请指出）：
 面试的时候通常这两个属性的区别，大家都能答出来。但是我曾经问过一个问题：它们两个的size在什么情况下不一样，很多人就会卡壳。
 我写了一个demo，来观察在`CALayer`旋转的时候，`bounds`和`frame`的`size`是否也会像`UIView`的`bounds`和`frame`似的，`size`不同。
 代码片段：
+
 ![bounds.vs.frame.code](./res/bounds.vs.frame.code.png)
 执行结果如下：
+
 ![bounds.vs.frame.demo](./res/bounds.vs.frame.demo.png)
+
 `bounds`和`frame`在demo中是这样的：
+
 ![bounds.frame.diagram](./res/bounds.frame.diagram.jpeg)
+
 另外，上文提到了，frame不支持隐式动画。
 CALayer中大部分属性都支持隐式动画。所以隐式动画，就是当你修改了某个属性的时候，自动会有动画效果，不需要你做什么。
 
