@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_dimen_ratio"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:text="A"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_percent"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:text="B"
+                    android:gravity="center"
+                    android:background="@android:color/holo_blue_light"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/tv_barrier_a"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="A"
+                    android:background="@android:color/holo_red_light"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tv_barrier_b"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:text="B"
+                    android:background="@android:color/holo_red_light"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/linear_layout"
+                android:layout_alignTop="@id/linear_layout"
+                android:layout_alignBottom="@id/linear_layout">
+
+                <TextView
+                    android:id="@+id/tv_barrier_c"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:text="C"
+                    android:background="@android:color/holo_blue_light"
+                    android:gravity="center"/>
+            </FrameLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_chain_a"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="A"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_chain_vote_a"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="2000"
+                android:background="@android:color/holo_blue_light"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_chain_vs"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="VS"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_chain_vote_b"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="1000"
+                android:background="@android:color/holo_blue_light"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_chain_b"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="B"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_animation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="Animate"
+        android:gravity="center"
+        android:background="@android:color/holo_green_light"/>
+</RelativeLayout>
