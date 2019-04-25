@@ -5,7 +5,11 @@
 希望能在这篇文章中让大家对iOS动画有所了解，获得动画实现的一些思路，可以自己实现更加华丽的动画效果。
 计划包括如下内容和一些Demo:
 - [ ] CALayer
-    - [ ] 常见属性
+    - [X] 容易混淆的属性
+        - [X] bounds和frame
+        - [X] anchorPoint
+        - [X] content
+        - [X] transform
     - [ ] 绘图
 - [ ] Core Animation
     - [ ] CABasicAnimation
@@ -15,7 +19,6 @@
     - [ ] 交互动画
     - [ ] CGAffineTransform和矩阵变换
 - [ ] 番外篇
-- [ ] Demo
 
 ## CALayer
 在开始之前，推荐大家读一篇文章：[绘制像素到屏幕上](https://objccn.io/issue-3-1/)。这是一篇写原理的文章。这类文章我个人的看法是可能开始的时候你不是必须了解它，但是如果你需要进阶，了解原理是很必要的。
@@ -49,7 +52,7 @@ CALayer比较常用的属性如下（有落下的请指出）：
     - opacity, 透明度，对应`UIView`的`alpha`
 - hidden
 - sublayers
-- contents，显示的内容, 这个属性比较有迷惑性
+- contents，寄宿图, 这个属性比较有迷惑性
 - contentsRect，显示内容的位置和大小
 - transform, 矩阵变换
 
@@ -65,15 +68,40 @@ CALayer比较常用的属性如下（有落下的请指出）：
 另外，上文提到了，frame不支持隐式动画。
 CALayer中大部分属性都支持隐式动画。所以隐式动画，就是当你修改了某个属性的时候，自动会有动画效果，不需要你做什么。
 
-
 #### anchorPoint
+提到锚点, 很多人知道在做旋转动画的时候，layer会围绕着锚点旋转。但是锚点具体是什么，不少人说不清楚。
+锚点的取值范围是(0, 0) - (1, 1)，默认值是(0.5, .05)。
+推荐一篇文章，把锚点讲的很清楚：[彻底理解position与anchorPoint](http://wonderffee.github.io/blog/2013/10/13/understand-anchorpoint-and-position/)
+以下摘抄自该文章，用来记录一些要点：
 
-#### content
+> 1、position是layer中的anchorPoint在superLayer中的位置坐标。
+> 2、互不影响原则：单独修改position与anchorPoint中任何一个属性都不影响另一个属性。
+> 3、frame、position与anchorPoint有以下关系
+>
+> - frame.origin.x = position.x - anchorPoint.x * bounds.size.width；  
+> - frame.origin.y = position.y - anchorPoint.y * bounds.size.height；
+
+引文里的这个公式，能很好的解释为什么修改锚点，layer的位置会移动。
+
+#### contents
+寄宿图。
+它的定义是`open var contents: Any?`,看起来很*随和*。但是它其实只接受`CGImage`。
+当使用`let view = UIView(frame: CGRectMake(0, 0, 200, 200))`生成一个视图对象并添加到屏幕上时，从`CALayer`的结构可以知道，这个视图的`layer`的三个视觉元素是这样的：`contents`为空，`backgroundColor`空(透明色)，`borderWidth`0，这个视图从视觉上看什么都看不到。`CALayer`文档第一句话就是：
+
+> The CALayer class manages image-based content and allows you to perform animations on that content.」
+
+UIView 的显示内容很大程度上就是一张图片(CGImage)。
+
+*所以出现了一个名为*`UIImageView`*的东西，因为给layer赛一个image进去太方便了。*
 
 #### transform
 请参考章节：CGAffineTransform和矩阵变换。希望我能够说明白，线性代数都还给老师了。
 
 ### 绘制篇
+CALayer的绘制比较常见的方式：
+- `CAShapeLayer`+`UIBezierPath`绘制
+- 实现`CALayerDelegate`绘制
+- 子类化`CALayer`并重写`open func draw(in ctx: CGContext)`
 
 ## Core Animation
 
@@ -91,6 +119,14 @@ CALayer中大部分属性都支持隐式动画。所以隐式动画，就是当�
 
 ### 番外篇
 写这样一章，是因为有一些不确定放在哪里合适的内容。有些内容可能不太成系统，但是值得写一下。
+#### UIView的drawRect
+`UIView`有个方法`open func draw(_ rect: CGRect)`
+是很省事儿的自己绘制View的方法。但是我通常不建议通过它来进行绘制，而是建议用layer来实现。
+因为该方法，会在内存中为rect申请一个buffer(实际就是寄宿图，寄宿图在CALayer时候讲过)，大小是`rect.size` * `contentsScale` * 4。所以当你企图做全屏绘制的时候，内存的消耗会相当大。
+另外，如果你实现了`CALayerDelegate`，但是没有实现`displayLayer`，那么就会尝试调用`- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx`。结果和`drawRect`是一样的
 
-### Demo
+### 参考资料
+[绘制像素到屏幕上](https://objccn.io/issue-3-1/)
+[iOS开发系列--让你的应用“动”起来](http://www.cnblogs.com/kenshincui/p/3972100.html)
+
 

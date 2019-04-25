@@ -19,23 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zcJ-Et-TOZ" customClass="BoundsFrameView" customModule="animation_basic" customModuleProvider="target">
-                                <rect key="frame" x="31" y="138" width="348" height="294"/>
+                                <rect key="frame" x="31" y="138" width="348" height="274"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BqC-tS-f0H">
-                                <rect key="frame" x="31" y="97" width="42" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="BqC-tS-f0H" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="CgO-mL-bgo"/>
-                            <constraint firstItem="BqC-tS-f0H" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="Hqh-wE-ZfV"/>
                             <constraint firstItem="zcJ-Et-TOZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="Mjh-UJ-1OF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zcJ-Et-TOZ" secondAttribute="trailing" constant="35" id="prh-s2-BLN"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zcJ-Et-TOZ" secondAttribute="bottom" constant="430" id="uRz-3d-dtr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zcJ-Et-TOZ" secondAttribute="bottom" constant="450" id="uRz-3d-dtr"/>
                             <constraint firstItem="zcJ-Et-TOZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="vbB-as-pKz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
