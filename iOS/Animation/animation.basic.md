@@ -263,6 +263,7 @@ struct CATransform3D
 它的`identity`是
 ![idendity](./res/3D.identity.png)
 
+
 ##### 平移
 ![3D平移](./res/3D.translation.png)
 
@@ -273,6 +274,7 @@ struct CATransform3D
 @available(iOS 2.0, *)
 public func CATransform3DMakeTranslation(_ tx: CGFloat, _ ty: CGFloat, _ tz: CGFloat) -> CATransform3D
 ```
+
 
 ##### 缩放
 ![3D缩放](./res/3D.scale.png)
@@ -285,6 +287,7 @@ public func CATransform3DMakeTranslation(_ tx: CGFloat, _ ty: CGFloat, _ tz: CGF
 @available(iOS 2.0, *)
 public func CATransform3DMakeScale(_ sx: CGFloat, _ sy: CGFloat, _ sz: CGFloat) -> CATransform3D
 ```
+
 
 ##### 沿X轴旋转
 $\begin{bmatrix}
@@ -302,12 +305,14 @@ public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFlo
 ```
 
 
+
 ##### 沿Y轴旋转
 ![3D 沿Y轴旋转](./res/3D.rotate.y.png)
 
 ```Swift
 public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
 ```
+
 
 ##### 沿Z轴旋转
 沿Z轴旋转，其实就是2D的旋转。
@@ -316,6 +321,7 @@ public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFlo
 ```Swift
 public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
 ```
+
 
 ##### Demo
 
@@ -329,6 +335,7 @@ public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFlo
 ```
 
 执行一下看什么效果：
+
 <img src="./res/3d.rotatex.unexpected.png" width="300"/>
 
 看起来完全没有3D旋转的效果，是不是。
@@ -355,6 +362,7 @@ CGFloat m41（x平移）, m42（y平移）, m43（z平移）, m44（）;
 ```
 
 执行一下看什么效果：
+
 <img src="./res/3D.rotatex.expected.png" width="300"/>
 
 
