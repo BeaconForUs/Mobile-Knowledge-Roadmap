@@ -1,4 +1,4 @@
-#ConstraintLayout
+# ConstraintLayout
 
 约束布局(ConstraintLayout)是Android Studio 2.2后新增的一种布局，目前已经成为新建项目的默认布局，相比传统布局(RelativeLayout, LinearLayout, FrameLayout)，它可以
 
@@ -11,7 +11,7 @@
 
 约束布局功能和性能测试的[demo](../../../demo).
 
-##约束空间
+## 约束空间
 
 约束空间是一个包含上下左右边界位置的范围。通常，我们需要首先为每一个view设置一个约束空间，然后再使用其他约束来确定view的宽高以及在约束空间中的相对位置。
 
@@ -31,7 +31,7 @@
 
 ![](res/约束空间.png)
 
-##功能优势
+## 功能优势
 
 + #### 百分比布局
 
@@ -233,7 +233,7 @@
 
   使用相对布局时，我们需要布局嵌套实现这个功能。
 
-+ ####Guideline
++ #### Guideline
 
   Guideline也是一条不可见的水平/垂直辅助线，与Barrier的不同之处在于它的位置是整个布局中的一个固定位置。
 
@@ -241,15 +241,15 @@
 
   在约束布局中，可以将多个view设置成一个group。后续可以一次性设置整个group的可见性，减少代码量。
 
-+ ####Transition
++ #### Transition
 
   在约束布局中，当view的位置或大小发生变化时，我们可以很方便的为其设置动画效果，提升用户体验。
 
   ![](res/transition.gif)
 
-##功能缺点
+## 功能缺点
 
-+ ####margin不能为负值
++ #### margin不能为负值
 
   在约束布局中，margin设置成负值无效。
 
@@ -257,12 +257,12 @@
 
   ![](res/negative.png)
 
-+ ####简单约束没有传统布局方便
++ #### 简单约束没有传统布局方便
 
   对于简单的约束，例如只是要在父布局中居中，以前一行代码搞定的事情使用约束布局要4行。
 
 
-##性能
+## 性能
 
 [官方测试](https://github.com/googlesamples/android-constraint-layout-performance)结果是约束布局的性能要优于传统布局。
 
@@ -283,7 +283,7 @@
 
 [Constraint Layout performance](https://medium.com/@krpiotrek/constraintlayout-performance-c1455c7984d7)
 
-##其他
+## 其他
 
 + 布局编辑器
 
