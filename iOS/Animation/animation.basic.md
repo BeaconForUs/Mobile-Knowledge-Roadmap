@@ -17,7 +17,7 @@
     - [ ] CAAnimationGroup
     - [ ] CADisplayLink
     - [ ] 交互动画
-    - [ ] CGAffineTransform和矩阵变换
+    - [X] CGAffineTransform和矩阵变换
 - [ ] 番外篇
 
 ## CALayer
