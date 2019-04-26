@@ -92,21 +92,52 @@
                                     <action selector="tapMakeTransform:" destination="PXb-CA-Zlf" eventType="touchUpInside" id="4gU-rp-Qh6"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXQ-O7-4An">
+                                <rect key="frame" x="15" y="706" width="56" height="30"/>
+                                <state key="normal" title="X轴旋转"/>
+                                <connections>
+                                    <action selector="tap3DX:" destination="PXb-CA-Zlf" eventType="touchUpInside" id="H9u-n5-EWW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHu-Rd-csZ">
+                                <rect key="frame" x="15" y="744" width="56" height="30"/>
+                                <state key="normal" title="Y轴旋转"/>
+                                <connections>
+                                    <action selector="tap3DY:" destination="PXb-CA-Zlf" eventType="touchUpInside" id="9o5-F8-7sQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gW4-cq-lcl">
+                                <rect key="frame" x="15" y="782" width="56" height="30"/>
+                                <state key="normal" title="Z轴旋转"/>
+                                <connections>
+                                    <action selector="tap3DZ:" destination="PXb-CA-Zlf" eventType="touchUpInside" id="OUd-V8-NFj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gW4-cq-lcl" firstAttribute="leading" secondItem="JHu-Rd-csZ" secondAttribute="leading" id="196-Ok-TJv"/>
                             <constraint firstItem="B6x-En-oef" firstAttribute="top" secondItem="LB8-r9-cNv" secondAttribute="bottom" constant="8" id="3Uy-m4-8nm"/>
                             <constraint firstItem="B6x-En-oef" firstAttribute="trailing" secondItem="LB8-r9-cNv" secondAttribute="trailing" id="3wJ-eG-MAi"/>
+                            <constraint firstItem="T7C-bf-ZnD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bXQ-O7-4An" secondAttribute="trailing" constant="8" symbolic="YES" id="7H9-AD-K8B"/>
                             <constraint firstItem="LB8-r9-cNv" firstAttribute="top" secondItem="1lZ-fF-a4U" secondAttribute="bottom" constant="8" id="ATW-Hr-UDf"/>
                             <constraint firstItem="ieN-u8-xcB" firstAttribute="top" secondItem="XIH-ve-Bf8" secondAttribute="top" constant="100" id="D2q-mv-ShX"/>
+                            <constraint firstItem="JHu-Rd-csZ" firstAttribute="top" secondItem="1lZ-fF-a4U" secondAttribute="top" id="KJF-kw-RGN"/>
                             <constraint firstItem="LB8-r9-cNv" firstAttribute="trailing" secondItem="1lZ-fF-a4U" secondAttribute="trailing" id="M2w-MK-hOS"/>
                             <constraint firstItem="1lZ-fF-a4U" firstAttribute="trailing" secondItem="T7C-bf-ZnD" secondAttribute="trailing" id="OgU-Av-lpe"/>
                             <constraint firstItem="1lZ-fF-a4U" firstAttribute="top" secondItem="T7C-bf-ZnD" secondAttribute="bottom" constant="8" id="PqD-Mp-DGx"/>
                             <constraint firstItem="XIH-ve-Bf8" firstAttribute="bottom" secondItem="B6x-En-oef" secondAttribute="bottom" constant="12" id="YKb-e0-keJ"/>
                             <constraint firstItem="XIH-ve-Bf8" firstAttribute="trailing" secondItem="B6x-En-oef" secondAttribute="trailing" constant="27" id="Yi6-hx-CRm"/>
+                            <constraint firstItem="bXQ-O7-4An" firstAttribute="top" secondItem="T7C-bf-ZnD" secondAttribute="top" id="a9m-nB-KCF"/>
+                            <constraint firstItem="1lZ-fF-a4U" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JHu-Rd-csZ" secondAttribute="trailing" constant="8" symbolic="YES" id="aSd-EY-loT"/>
+                            <constraint firstItem="gW4-cq-lcl" firstAttribute="top" secondItem="LB8-r9-cNv" secondAttribute="top" id="bD0-Xi-p9K"/>
+                            <constraint firstItem="LB8-r9-cNv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gW4-cq-lcl" secondAttribute="trailing" constant="8" symbolic="YES" id="fwH-d8-ltp"/>
                             <constraint firstItem="ieN-u8-xcB" firstAttribute="centerX" secondItem="XIH-ve-Bf8" secondAttribute="centerX" id="nhG-iP-b2p"/>
                             <constraint firstItem="B6x-En-oef" firstAttribute="leading" secondItem="ZtD-Y8-klP" secondAttribute="trailing" constant="17" id="plj-5n-pzm"/>
                             <constraint firstItem="ZtD-Y8-klP" firstAttribute="top" secondItem="B6x-En-oef" secondAttribute="top" id="rDN-Zn-8P2"/>
+                            <constraint firstItem="ZtD-Y8-klP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XIH-ve-Bf8" secondAttribute="leading" symbolic="YES" id="unf-ov-pSU"/>
+                            <constraint firstItem="JHu-Rd-csZ" firstAttribute="leading" secondItem="bXQ-O7-4An" secondAttribute="leading" id="znF-Ir-eB8"/>
+                            <constraint firstItem="bXQ-O7-4An" firstAttribute="leading" secondItem="XIH-ve-Bf8" secondAttribute="leading" constant="15" id="zu3-fR-ZPH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XIH-ve-Bf8"/>
                     </view>

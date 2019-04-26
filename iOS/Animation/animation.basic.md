@@ -275,14 +275,8 @@ public func CATransform3DMakeTranslation(_ tx: CGFloat, _ ty: CGFloat, _ tz: CGF
 ```
 
 ##### 缩放
-![3D缩放]()
+![3D缩放](./res/3D.scale.png)
 
-\begin{bmatrix}
-1 &0 &0 &0 \\
-0 &\cos \Theta  &\sin \Theta   &0 \\ 
-0 &-\sin \Theta   &\cos \Theta   &0 \\ 
-0 &0  &0  &1 
-\end{bmatrix}
 
 ```Swift
 /* Returns a transform that scales by `(sx, sy, sz)':
@@ -293,25 +287,75 @@ public func CATransform3DMakeScale(_ sx: CGFloat, _ sy: CGFloat, _ sz: CGFloat) 
 ```
 
 ##### 沿X轴旋转
-![3D 沿X轴旋转]()
+$\begin{bmatrix}
+1 &0 &0 &0 \\
+0 &\cos \Theta  &\sin \Theta   &0 \\ 
+0 &-\sin \Theta   &\cos \Theta   &0 \\ 
+0 &0  &0  &1 
+\end{bmatrix}$
+**好吧github不支持矩阵的公式**😂
+
+![3D 沿X轴旋转](./res/3D.rotate.x.png)
+
 ```Swift
 public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
 ```
 
 
 ##### 沿Y轴旋转
-![3D 沿Y轴旋转]()
+![3D 沿Y轴旋转](./res/3D.rotate.y.png)
+
 ```Swift
 public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
 ```
-
 
 ##### 沿Z轴旋转
 沿Z轴旋转，其实就是2D的旋转。
-![3D 沿Z轴旋转]()
+![3D 沿Z轴旋转](./res/3D.rotate.z.png)
+
 ```Swift
 public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
 ```
+
+##### Demo
+
+测试一下沿着X轴旋转的效果：
+
+```Swift
+    @IBAction func tap3DX(_ sender: UIButton) {
+        let transform = CATransform3DMakeRotation(CGFloat(Float.pi) / 4, 1, 0, 0)
+        presentationView.layer.transform = transform
+    }
+```
+
+执行一下看什么效果：
+<img src="./res/3d.rotatex.unexpected.png" width="300"/>
+
+看起来完全没有3D旋转的效果，是不是。
+我们来回顾一下`CATransform3D`的定义，还记得那些`mxx`的属性么。
+```Swift
+struct CATransform3D
+{
+CGFloat m11（x缩放）, m12（y切变）, m13（旋转）, m14（X轴透视）;
+CGFloat m21（x切变）, m22（y缩放）, m23（）, m24（Y轴透视）;
+CGFloat m31（旋转）, m32（）, m33（）, m34（Z轴透视）;
+CGFloat m41（x平移）, m42（y平移）, m43（z平移）, m44（）;
+}; 
+```
+有些m我也不清楚做什么的，惭愧，希望能有高手指点。
+
+修改代码：
+```Swift
+    @IBAction func tap3DX(_ sender: UIButton) {
+        var transform = CATransform3DIdentity
+        transform.m34 = 1.0 / 800
+        transform = CATransform3DRotate(transform, CGFloat(Float.pi) / 4, 1, 0, 0)
+        presentationView.layer.transform = transform
+    }
+```
+
+执行一下看什么效果：
+<img src="./res/3D.rotatex.expected.png" width="300"/>
 
 
 ### 番外篇

@@ -36,7 +36,6 @@ class AffineTransformViewController: UIViewController {
         // 旋转45°
         let transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) / 4)
         presentationView.transform = transform
-        presentationView.layer.transform = CATransform3D(m11: <#T##CGFloat#>, m12: <#T##CGFloat#>, m13: <#T##CGFloat#>, m14: <#T##CGFloat#>, m21: <#T##CGFloat#>, m22: <#T##CGFloat#>, m23: <#T##CGFloat#>, m24: <#T##CGFloat#>, m31: <#T##CGFloat#>, m32: <#T##CGFloat#>, m33: <#T##CGFloat#>, m34: <#T##CGFloat#>, m41: <#T##CGFloat#>, m42: <#T##CGFloat#>, m43: <#T##CGFloat#>, m44: <#T##CGFloat#>)
     }
     
     @IBAction func tapScale(_ sender: UIButton) {
@@ -50,6 +49,21 @@ class AffineTransformViewController: UIViewController {
         let quaterOfPi = CGFloat(Double.pi) / 4
         let transform = CGAffineTransform(a: quaterOfPi, b: quaterOfPi, c: -quaterOfPi, d: quaterOfPi, tx: 0, ty: 100)
         presentationView.transform = transform
+    }
+    
+    @IBAction func tap3DX(_ sender: UIButton) {
+        var transform = CATransform3DIdentity
+//        transform.m14 = -1.0 / 500
+//        transform.m24 = -1.0 / 500
+        transform.m34 = 1.0 / 800
+        transform = CATransform3DRotate(transform, CGFloat(Float.pi) / 4, 1, 0, 0)
+        presentationView.layer.transform = transform
+    }
+    
+    @IBAction func tap3DY(_ sender: UIButton) {
+    }
+    
+    @IBAction func tap3DZ(_ sender: UIButton) {
     }
     
     // MARK: - Private methods
