@@ -121,6 +121,35 @@ CALayer的绘制比较常见的方式：
 ### 交互动画
 
 ### CGAffineTransform和矩阵变换
+在写这一篇之前，我企图重新学一下线性代数中矩阵相关的知识，但是可耻的失败了。也许我还会去继续挑战它，但是这篇文章不想再拖下去了，我就无耻的忽略理论直接讲了。如果这篇文章有幸被哪位高手看到，且高手实在是不能忍受我的错误百出而加以指点，那就很开心了。
+总之，我会尽量准确。另外，有志于重拾大学线代的同学，可以看下`3Blue1Brown`的视频课程。他在B站有账户。[【双语字幕】「线性代数的本质」合集](https://www.bilibili.com/video/av6731067/)
+
+#### 仿射变换
+`UIView`的`transform`类型为`CGAffineTransform`, 它是个用作二维变换的3*2的矩阵。
+看下它的定义：
+```Swift
+public struct CGAffineTransform {
+
+    public var a: CGFloat
+
+    public var b: CGFloat
+
+    public var c: CGFloat
+
+    public var d: CGFloat
+
+    public var tx: CGFloat
+
+    public var ty: CGFloat
+
+    public init()
+
+    public init(a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat, tx: CGFloat, ty: CGFloat)
+}
+```
+
+
+#### CATransform3D
 
 ### 番外篇
 写这样一章，是因为有一些不确定放在哪里合适的内容。有些内容可能不太成系统，但是值得写一下。
