@@ -194,7 +194,8 @@ CG_EXTERN CGAffineTransform CGAffineTransformMakeTranslation(CGFloat tx, CGFloat
 代码如下：
 ![仿射变换Demo](./res/affine-transform-code.png)
 效果：
-![](./res/Screen.Shot.origin.png)![](./res/Screen.Shot.translate.png)![](./res/Screen.Shot.rotation.png)![](./res/Screen.Shot.scale.png)![](./res/Screen.Shot.free.png)
+<img src="./res/Screen.Shot.origin.png" width="300"/><img src="./res/Screen.Shot.translate.png" width="300"/><img src="./res/Screen.Shot.rotation.png" width="300"/><img src="./res/Screen.Shot.scale.png" width="300"/><img src="./res/Screen.Shot.free.png" width="300"/>
+
 
 *平移 0，100，同时旋转45°*那部分代码，实际上可以这样写：
 ```Swift
