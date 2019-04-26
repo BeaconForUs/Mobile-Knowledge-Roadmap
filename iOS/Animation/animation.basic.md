@@ -148,8 +148,75 @@ public struct CGAffineTransform {
 }
 ```
 
+因为第三列是固定的`[0, 0, 1]`, 所以只需要定义一个3*2矩阵。
+这样（企图用markdown写矩阵公式失败）：
+![变换矩阵](./res/matrix.png)
+
+x' = ax + cy + tx
+y' = xb + yd + ty 
+
+*忽然进入容易理解的领域了*😋
+##### 平移
+x' = x + tx
+y' = y + ty
+所以a = 1, b = 0, c = 0, d = 1
+平移的矩阵是:
+
+![平移的矩阵](./res/matrix-translation.png)
+
+来看下平移变换的API的定义：
+```Objective-C
+/* Return a transform which translates by `(tx, ty)': t' = [ 1 0 0 1 tx ty ] */
+CG_EXTERN CGAffineTransform CGAffineTransformMakeTranslation(CGFloat tx, CGFloat ty) CG_AVAILABLE_STARTING(10.0, 2.0);
+```
+
+它在`Swift`里是这样的
+
+```Swift
+    /* Return a transform which translates by `(tx, ty)':
+         t' = [ 1 0 0 1 tx ty ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(translationX tx: CGFloat, y ty: CGFloat)
+```
+
+##### Demo
+来看下Demo。先从免费图片网站[Startup Stock Photos](https://startupstockphotos.com/)找张图。
+
+![示例图片](./res/transform.demo.jpg)
+
+代码中演示四种变换：
+- 平移
+- 旋转
+- 缩放
+- 自由变换
+
+代码如下：
+![仿射变换Demo](./res/affine-transform-code.png)
+效果：
+![](./res/Screen.Shot.origin.png)![](./res/Screen.Shot.translate.png)![](./res/Screen.Shot.rotation.png)![](./res/Screen.Shot.scale.png)![](./res/Screen.Shot.free.png)
+
+*平移 0，100，同时旋转45°*那部分代码，实际上可以这样写：
+```Swift
+let transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) / 4).translatedBy(x: 0, y: 100)
+```
+
+这里的`transform`实际上是这样的：
+
+![平移 0，100，同时旋转45°的矩阵](./res/free-affine-matrix.png)
+
+为了证明我确实是大学毕业，所以我勇敢的直接构造出了变换的结果。
+
+```Swift
+let quaterOfPi = CGFloat(Double.pi) / 4
+let transform = CGAffineTransform(a: quaterOfPi, b: quaterOfPi, c: -quaterOfPi, d: quaterOfPi, tx: 0, ty: 100)
+.translatedBy(x: 0, y: 100)
+```
+
+
 
 #### CATransform3D
+
 
 ### 番外篇
 写这样一章，是因为有一些不确定放在哪里合适的内容。有些内容可能不太成系统，但是值得写一下。
