@@ -162,7 +162,7 @@ y' = y + ty
 所以a = 1, b = 0, c = 0, d = 1
 平移的矩阵是:
 
-![平移的矩阵](./res/matrix-translation.png)
+![平移的矩阵](./res/2D.translation.png)
 
 来看下平移变换的API的定义：
 ```Objective-C
@@ -178,6 +178,34 @@ CG_EXTERN CGAffineTransform CGAffineTransformMakeTranslation(CGFloat tx, CGFloat
     
     @available(iOS 2.0, *)
     public /*not inherited*/ init(translationX tx: CGFloat, y ty: CGFloat)
+```
+
+##### 旋转
+旋转的矩阵是:
+
+![旋转的矩阵](./res/2D.rotation.png)
+
+来看下旋转变换的API的定义：
+```Swift
+    /* Return a transform which rotates by `angle' radians:
+         t' = [ cos(angle) sin(angle) -sin(angle) cos(angle) 0 0 ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(rotationAngle angle: CGFloat)
+```
+
+##### 缩放
+缩放的矩阵是:
+
+![缩放的矩阵](./res/2D.scale.png)
+
+来看下缩放变换的API的定义：
+```Swift
+    /* Return a transform which scales by `(sx, sy)':
+         t' = [ sx 0 0 sy 0 0 ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(scaleX sx: CGFloat, y sy: CGFloat)
 ```
 
 ##### Demo
@@ -217,6 +245,73 @@ let transform = CGAffineTransform(a: quaterOfPi, b: quaterOfPi, c: -quaterOfPi, 
 
 
 #### CATransform3D
+我们讨论过二维变换矩阵之后，本节讨论三维变换。
+##### CATransform3D的定义
+
+```Swift
+struct CATransform3D
+{
+  CGFloat m11, m12, m13, m14;
+  CGFloat m21, m22, m23, m24;
+  CGFloat m31, m32, m33, m34;
+  CGFloat m41, m42, m43, m44;
+};
+```
+
+`Swift`的写法太啰嗦了，我这里贴的是`Objective-C`的定义
+这里可以看出来3D变换是一个4*4的矩阵。
+它的`identity`是
+![idendity](./res/3D.identity.png)
+
+##### 平移
+![3D平移](./res/3D.translation.png)
+
+```Swift
+/* Returns a transform that translates by '(tx, ty, tz)':
+ * t' =  [1 0 0 0; 0 1 0 0; 0 0 1 0; tx ty tz 1]. */
+
+@available(iOS 2.0, *)
+public func CATransform3DMakeTranslation(_ tx: CGFloat, _ ty: CGFloat, _ tz: CGFloat) -> CATransform3D
+```
+
+##### 缩放
+![3D缩放]()
+
+\begin{bmatrix}
+1 &0 &0 &0 \\
+0 &\cos \Theta  &\sin \Theta   &0 \\ 
+0 &-\sin \Theta   &\cos \Theta   &0 \\ 
+0 &0  &0  &1 
+\end{bmatrix}
+
+```Swift
+/* Returns a transform that scales by `(sx, sy, sz)':
+ * t' = [sx 0 0 0; 0 sy 0 0; 0 0 sz 0; 0 0 0 1]. */
+
+@available(iOS 2.0, *)
+public func CATransform3DMakeScale(_ sx: CGFloat, _ sy: CGFloat, _ sz: CGFloat) -> CATransform3D
+```
+
+##### 沿X轴旋转
+![3D 沿X轴旋转]()
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
+
+
+##### 沿Y轴旋转
+![3D 沿Y轴旋转]()
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
+
+
+##### 沿Z轴旋转
+沿Z轴旋转，其实就是2D的旋转。
+![3D 沿Z轴旋转]()
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
 
 
 ### 番外篇
