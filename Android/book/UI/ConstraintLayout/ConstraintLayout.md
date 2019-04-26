@@ -1,4 +1,4 @@
-#ConstraintLayout
+# ConstraintLayout
 
 约束布局(ConstraintLayout)是Android Studio 2.2后新增的一种布局，目前已经成为新建项目的默认布局，相比传统布局(RelativeLayout, LinearLayout, FrameLayout)，它可以
 
@@ -11,7 +11,7 @@
 
 约束布局功能和性能测试的[demo](../../../demo).
 
-##约束空间
+## 约束空间
 
 约束空间是一个包含上下左右边界位置的范围。通常，我们需要首先为每一个view设置一个约束空间，然后再使用其他约束来确定view的宽高以及在约束空间中的相对位置。
 
@@ -31,7 +31,7 @@
 
 ![](res/约束空间.png)
 
-##功能优势
+## 功能优势
 
 + #### 百分比布局
 
@@ -247,7 +247,7 @@
 
   ![](res/transition.gif)
 
-##功能缺点
+## 功能缺点
 
 + ####margin不能为负值
 
@@ -262,7 +262,7 @@
   对于简单的约束，例如只是要在父布局中居中，以前一行代码搞定的事情使用约束布局要4行。
 
 
-##性能
+## 性能
 
 [官方测试](https://github.com/googlesamples/android-constraint-layout-performance)结果是约束布局的性能要优于传统布局。
 
@@ -283,7 +283,7 @@
 
 [Constraint Layout performance](https://medium.com/@krpiotrek/constraintlayout-performance-c1455c7984d7)
 
-##其他
+## 其他
 
 + 布局编辑器
 
