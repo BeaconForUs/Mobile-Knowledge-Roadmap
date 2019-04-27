@@ -57,7 +57,9 @@ CALayer比较常用的属性如下（有落下的请指出）：
 - transform, 矩阵变换
 
 #### bounds和frame
-面试的时候通常这两个属性的区别，大家都能答出来。但是我曾经问过一个问题：它们两个的size在什么情况下不一样，很多人就会卡壳。
+面试的时候通常这两个属性的区别，大家都能答出来。但是我曾经问过一个问题：它们两个的size是不是永远一样。这个问题我问过的很多人（其实是我问过的所有人，但是知道的人肯定也有很多）就会卡壳。
+**答案是不是永远一样**。
+通常`bounds`和`frame`的`size`总是一样的，但是在做**旋转**的时候会不一样。
 我写了一个demo，来观察在`CALayer`旋转的时候，`bounds`和`frame`的`size`是否也会像`UIView`的`bounds`和`frame`似的，`size`不同。
 代码片段：
 
@@ -373,6 +375,9 @@ CGFloat m41（x平移）, m42（y平移）, m43（z平移）, m44（）;
 是很省事儿的自己绘制View的方法。但是我通常不建议通过它来进行绘制，而是建议用layer来实现。
 因为该方法，会在内存中为rect申请一个buffer(实际就是寄宿图，寄宿图在CALayer时候讲过)，大小是`rect.size` * `contentsScale` * 4。所以当你企图做全屏绘制的时候，内存的消耗会相当大。
 另外，如果你实现了`CALayerDelegate`，但是没有实现`displayLayer`，那么就会尝试调用`- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx`。结果和`drawRect`是一样的
+
+### 特别感谢
+特别感谢一下我的朋友`yumiao2016`，这个项目的发起者。他给我指正了很多矩阵方面的错误。不愧是中科院计算所出来的学霸。
 
 ### 参考资料
 [绘制像素到屏幕上](https://objccn.io/issue-3-1/)

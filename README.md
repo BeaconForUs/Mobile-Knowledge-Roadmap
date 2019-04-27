@@ -5,7 +5,7 @@
 ## 内容
 [Android](Android/Overview.md)
 
-[iOS](iOS/Overview.md)
+[iOS](iOS/README.md)
 
 ## Gitbook（需要科学上网）
 为方便阅读，我们将不定期的更新内容到[Gitbook](https://beacon-1.gitbook.io/mobile-knowledge-roadmap/)，以及Gitbook的[PDF]()版本（嗯...现在还没有）
