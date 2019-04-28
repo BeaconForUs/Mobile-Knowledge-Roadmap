@@ -265,6 +265,10 @@ class DrawLayerViewController: UIViewController {
 
 ## Core Animation
 
+Core Animation主要的接口和类关系如下图：
+
+![CA类图](res/CAAnimation.hierarchy.png)
+
 ### CABasicAnimation
 
 ### CAKeyFrameAnimation
