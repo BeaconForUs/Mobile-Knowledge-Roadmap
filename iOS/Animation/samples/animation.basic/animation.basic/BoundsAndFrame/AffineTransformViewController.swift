@@ -53,8 +53,6 @@ class AffineTransformViewController: UIViewController {
     
     @IBAction func tap3DX(_ sender: UIButton) {
         var transform = CATransform3DIdentity
-//        transform.m14 = -1.0 / 500
-//        transform.m24 = -1.0 / 500
         transform.m34 = 1.0 / 800
         transform = CATransform3DRotate(transform, CGFloat(Float.pi) / 4, 1, 0, 0)
         presentationView.layer.transform = transform
