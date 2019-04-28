@@ -290,12 +290,14 @@ public func CATransform3DMakeScale(_ sx: CGFloat, _ sy: CGFloat, _ sz: CGFloat) 
 
 
 ##### 沿X轴旋转
-$\begin{bmatrix}
+$$
+\begin{bmatrix}
 1 &0 &0 &0 \\
 0 &\cos \Theta  &\sin \Theta   &0 \\ 
 0 &-\sin \Theta   &\cos \Theta   &0 \\ 
 0 &0  &0  &1 
-\end{bmatrix}$
+\end{bmatrix}
+$$
 **好吧github不支持矩阵的公式**😂
 
 ![3D 沿X轴旋转](./res/3D.rotate.x.png)
