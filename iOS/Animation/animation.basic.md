@@ -17,7 +17,7 @@
     - [ ] CAAnimationGroup
     - [ ] CADisplayLink
     - [ ] 交互动画
-    - [ ] CGAffineTransform和矩阵变换
+    - [X] CGAffineTransform和矩阵变换
 - [ ] 番外篇
 
 ## CALayer
@@ -57,14 +57,27 @@ CALayer比较常用的属性如下（有落下的请指出）：
 - transform, 矩阵变换
 
 #### bounds和frame
-面试的时候通常这两个属性的区别，大家都能答出来。但是我曾经问过一个问题：它们两个的size在什么情况下不一样，很多人就会卡壳。
+
+面试的时候通常这两个属性的区别，大家都能答出来。
+
+但是我曾经问过一个问题：它们两个的size是不是永远一样。这个问题我问过的很多人（其实是我问过的所有人，但是知道的人肯定也有很多）就会卡壳。
+
+**答案是不是永远一样**。
+
+通常`bounds`和`frame`的`size`总是一样的，但是在做**旋转**的时候会不一样。
+
 我写了一个demo，来观察在`CALayer`旋转的时候，`bounds`和`frame`的`size`是否也会像`UIView`的`bounds`和`frame`似的，`size`不同。
 代码片段：
+
 ![bounds.vs.frame.code](./res/bounds.vs.frame.code.png)
 执行结果如下：
+
 ![bounds.vs.frame.demo](./res/bounds.vs.frame.demo.png)
+
 `bounds`和`frame`在demo中是这样的：
+
 ![bounds.frame.diagram](./res/bounds.frame.diagram.jpeg)
+
 另外，上文提到了，frame不支持隐式动画。
 CALayer中大部分属性都支持隐式动画。所以隐式动画，就是当你修改了某个属性的时候，自动会有动画效果，不需要你做什么。
 
@@ -116,6 +129,250 @@ CALayer的绘制比较常见的方式：
 ### 交互动画
 
 ### CGAffineTransform和矩阵变换
+在写这一篇之前，我企图重新学一下线性代数中矩阵相关的知识，但是可耻的失败了。也许我还会去继续挑战它，但是这篇文章不想再拖下去了，我就无耻的忽略理论直接讲了。如果这篇文章有幸被哪位高手看到，且高手实在是不能忍受我的错误百出而加以指点，那就很开心了。
+总之，我会尽量准确。另外，有志于重拾大学线代的同学，可以看下`3Blue1Brown`的视频课程。他在B站有账户。[【双语字幕】「线性代数的本质」合集](https://www.bilibili.com/video/av6731067/)
+
+#### 仿射变换
+`UIView`的`transform`类型为`CGAffineTransform`, 它是个用作二维变换的3*2的矩阵。
+看下它的定义：
+```Swift
+public struct CGAffineTransform {
+
+    public var a: CGFloat
+
+    public var b: CGFloat
+
+    public var c: CGFloat
+
+    public var d: CGFloat
+
+    public var tx: CGFloat
+
+    public var ty: CGFloat
+
+    public init()
+
+    public init(a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat, tx: CGFloat, ty: CGFloat)
+}
+```
+
+因为第三列是固定的`[0, 0, 1]`, 所以只需要定义一个3*2矩阵。
+这样（企图用markdown写矩阵公式失败）：
+![变换矩阵](./res/matrix.png)
+
+x' = ax + cy + tx
+y' = xb + yd + ty 
+
+*忽然进入容易理解的领域了*😋
+##### 平移
+x' = x + tx
+y' = y + ty
+所以a = 1, b = 0, c = 0, d = 1
+平移的矩阵是:
+
+![平移的矩阵](./res/2D.translation.png)
+
+来看下平移变换的API的定义：
+```Objective-C
+/* Return a transform which translates by `(tx, ty)': t' = [ 1 0 0 1 tx ty ] */
+CG_EXTERN CGAffineTransform CGAffineTransformMakeTranslation(CGFloat tx, CGFloat ty) CG_AVAILABLE_STARTING(10.0, 2.0);
+```
+
+它在`Swift`里是这样的
+
+```Swift
+    /* Return a transform which translates by `(tx, ty)':
+         t' = [ 1 0 0 1 tx ty ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(translationX tx: CGFloat, y ty: CGFloat)
+```
+
+##### 旋转
+旋转的矩阵是:
+
+![旋转的矩阵](./res/2D.rotation.png)
+
+来看下旋转变换的API的定义：
+```Swift
+    /* Return a transform which rotates by `angle' radians:
+         t' = [ cos(angle) sin(angle) -sin(angle) cos(angle) 0 0 ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(rotationAngle angle: CGFloat)
+```
+
+##### 缩放
+缩放的矩阵是:
+
+![缩放的矩阵](./res/2D.scale.png)
+
+来看下缩放变换的API的定义：
+```Swift
+    /* Return a transform which scales by `(sx, sy)':
+         t' = [ sx 0 0 sy 0 0 ] */
+    
+    @available(iOS 2.0, *)
+    public /*not inherited*/ init(scaleX sx: CGFloat, y sy: CGFloat)
+```
+
+##### Demo
+来看下Demo。先从免费图片网站[Startup Stock Photos](https://startupstockphotos.com/)找张图。
+
+![示例图片](./res/transform.demo.jpg)
+
+代码中演示四种变换：
+- 平移
+- 旋转
+- 缩放
+- 自由变换
+
+代码如下：
+![仿射变换Demo](./res/affine-transform-code.png)
+效果：
+<img src="./res/Screen.Shot.origin.png" width="300"/><img src="./res/Screen.Shot.translate.png" width="300"/><img src="./res/Screen.Shot.rotation.png" width="300"/><img src="./res/Screen.Shot.scale.png" width="300"/><img src="./res/Screen.Shot.free.png" width="300"/>
+
+
+*平移 0，100，同时旋转45°*那部分代码，实际上可以这样写：
+```Swift
+let transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) / 4).translatedBy(x: 0, y: 100)
+```
+
+这里的`transform`实际上是这样的：
+
+![平移 0，100，同时旋转45°的矩阵](./res/free-affine-matrix.png)
+
+为了证明我确实是大学毕业，所以我勇敢的直接构造出了变换的结果。
+
+```Swift
+let quaterOfPi = CGFloat(Double.pi) / 4
+let transform = CGAffineTransform(a: quaterOfPi, b: quaterOfPi, c: -quaterOfPi, d: quaterOfPi, tx: 0, ty: 100)
+.translatedBy(x: 0, y: 100)
+```
+
+
+
+#### CATransform3D
+我们讨论过二维变换矩阵之后，本节讨论三维变换。
+##### CATransform3D的定义
+
+```Swift
+struct CATransform3D
+{
+  CGFloat m11, m12, m13, m14;
+  CGFloat m21, m22, m23, m24;
+  CGFloat m31, m32, m33, m34;
+  CGFloat m41, m42, m43, m44;
+};
+```
+
+`Swift`的写法太啰嗦了，我这里贴的是`Objective-C`的定义
+这里可以看出来3D变换是一个4*4的矩阵。
+它的`identity`是
+![idendity](./res/3D.identity.png)
+
+
+##### 平移
+![3D平移](./res/3D.translation.png)
+
+```Swift
+/* Returns a transform that translates by '(tx, ty, tz)':
+ * t' =  [1 0 0 0; 0 1 0 0; 0 0 1 0; tx ty tz 1]. */
+
+@available(iOS 2.0, *)
+public func CATransform3DMakeTranslation(_ tx: CGFloat, _ ty: CGFloat, _ tz: CGFloat) -> CATransform3D
+```
+
+
+##### 缩放
+![3D缩放](./res/3D.scale.png)
+
+
+```Swift
+/* Returns a transform that scales by `(sx, sy, sz)':
+ * t' = [sx 0 0 0; 0 sy 0 0; 0 0 sz 0; 0 0 0 1]. */
+
+@available(iOS 2.0, *)
+public func CATransform3DMakeScale(_ sx: CGFloat, _ sy: CGFloat, _ sz: CGFloat) -> CATransform3D
+```
+
+
+##### 沿X轴旋转
+$\begin{bmatrix}
+1 &0 &0 &0 \\
+0 &\cos \Theta  &\sin \Theta   &0 \\ 
+0 &-\sin \Theta   &\cos \Theta   &0 \\ 
+0 &0  &0  &1 
+\end{bmatrix}$
+**好吧github不支持矩阵的公式**😂
+
+![3D 沿X轴旋转](./res/3D.rotate.x.png)
+
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
+
+
+
+##### 沿Y轴旋转
+![3D 沿Y轴旋转](./res/3D.rotate.y.png)
+
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
+
+
+##### 沿Z轴旋转
+沿Z轴旋转，其实就是2D的旋转。
+![3D 沿Z轴旋转](./res/3D.rotate.z.png)
+
+```Swift
+public func CATransform3DMakeRotation(_ angle: CGFloat, _ x: CGFloat, _ y: CGFloat, _ z: CGFloat) -> CATransform3D
+```
+
+
+##### Demo
+
+测试一下沿着X轴旋转的效果：
+
+```Swift
+    @IBAction func tap3DX(_ sender: UIButton) {
+        let transform = CATransform3DMakeRotation(CGFloat(Float.pi) / 4, 1, 0, 0)
+        presentationView.layer.transform = transform
+    }
+```
+
+执行一下看什么效果：
+
+<img src="./res/3d.rotatex.unexpected.png" width="300"/>
+
+看起来完全没有3D旋转的效果，是不是。
+我们来回顾一下`CATransform3D`的定义，还记得那些`mxx`的属性么。
+```Swift
+struct CATransform3D
+{
+CGFloat m11（x缩放）, m12（y切变）, m13（旋转）, m14（X轴透视）;
+CGFloat m21（x切变）, m22（y缩放）, m23（）, m24（Y轴透视）;
+CGFloat m31（旋转）, m32（）, m33（）, m34（Z轴透视）;
+CGFloat m41（x平移）, m42（y平移）, m43（z平移）, m44（）;
+}; 
+```
+有些m我也不清楚做什么的，惭愧，希望能有高手指点。
+
+修改代码：
+```Swift
+    @IBAction func tap3DX(_ sender: UIButton) {
+        var transform = CATransform3DIdentity
+        transform.m34 = 1.0 / 800
+        transform = CATransform3DRotate(transform, CGFloat(Float.pi) / 4, 1, 0, 0)
+        presentationView.layer.transform = transform
+    }
+```
+
+执行一下看什么效果：
+
+<img src="./res/3D.rotatex.expected.png" width="300"/>
+
 
 ### 番外篇
 写这样一章，是因为有一些不确定放在哪里合适的内容。有些内容可能不太成系统，但是值得写一下。
@@ -124,6 +381,9 @@ CALayer的绘制比较常见的方式：
 是很省事儿的自己绘制View的方法。但是我通常不建议通过它来进行绘制，而是建议用layer来实现。
 因为该方法，会在内存中为rect申请一个buffer(实际就是寄宿图，寄宿图在CALayer时候讲过)，大小是`rect.size` * `contentsScale` * 4。所以当你企图做全屏绘制的时候，内存的消耗会相当大。
 另外，如果你实现了`CALayerDelegate`，但是没有实现`displayLayer`，那么就会尝试调用`- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx`。结果和`drawRect`是一样的
+
+### 特别感谢
+特别感谢一下我的朋友`yumiao2016`，这个项目的发起者。他给我指正了很多矩阵方面的错误。不愧是中科院计算所出来的学霸。
 
 ### 参考资料
 [绘制像素到屏幕上](https://objccn.io/issue-3-1/)
