@@ -179,13 +179,22 @@
                                     <action selector="tapDrawInContext:" destination="3Yr-PZ-lZk" eventType="touchUpInside" id="bwq-6Z-hde"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLe-2Y-jjQ">
+                                <rect key="frame" x="20" y="832" width="69" height="30"/>
+                                <state key="normal" title="Animation"/>
+                                <connections>
+                                    <segue destination="H7S-M6-GDF" kind="show" id="XcO-Jt-X0w"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zLe-2Y-jjQ" firstAttribute="top" secondItem="HCM-QM-Ze7" secondAttribute="top" id="Cdi-kz-C0w"/>
                             <constraint firstItem="ooG-UI-nTJ" firstAttribute="bottom" secondItem="HCM-QM-Ze7" secondAttribute="bottom" id="N3D-DT-Jq3"/>
                             <constraint firstItem="ooG-UI-nTJ" firstAttribute="trailing" secondItem="HCM-QM-Ze7" secondAttribute="trailing" constant="20" id="el2-Xe-KkR"/>
                             <constraint firstItem="HCM-QM-Ze7" firstAttribute="top" secondItem="amm-4o-EdW" secondAttribute="bottom" constant="8" id="hzH-lO-ade"/>
                             <constraint firstItem="amm-4o-EdW" firstAttribute="top" secondItem="2Kq-QG-IeP" secondAttribute="bottom" constant="8" id="lj5-UZ-1uq"/>
+                            <constraint firstItem="zLe-2Y-jjQ" firstAttribute="leading" secondItem="ooG-UI-nTJ" secondAttribute="leading" constant="20" id="loh-Sw-Bdh"/>
                             <constraint firstItem="HCM-QM-Ze7" firstAttribute="trailing" secondItem="amm-4o-EdW" secondAttribute="trailing" id="p5u-Xr-aBr"/>
                             <constraint firstItem="amm-4o-EdW" firstAttribute="trailing" secondItem="2Kq-QG-IeP" secondAttribute="trailing" id="wjp-mU-gAi"/>
                         </constraints>
@@ -196,6 +205,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJd-Hb-vYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4589.8550724637689" y="120.53571428571428"/>
+        </scene>
+        <!--Animatioin View Controller-->
+        <scene sceneID="zAZ-n6-6hb">
+            <objects>
+                <viewController id="H7S-M6-GDF" customClass="AnimatioinViewController" customModule="animation_basic" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ON9-en-zYd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Fu-z5-PeD">
+                                <rect key="frame" x="354" y="832" width="34" height="30"/>
+                                <state key="normal" title="Base"/>
+                                <connections>
+                                    <action selector="tapAnimation:" destination="H7S-M6-GDF" eventType="touchUpInside" id="fQ7-fT-YTt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ja-Ds-1K9">
+                                <rect key="frame" x="276" y="832" width="66" height="30"/>
+                                <state key="normal" title="Keyframe"/>
+                                <connections>
+                                    <action selector="tapKeyframe:" destination="H7S-M6-GDF" eventType="touchUpInside" id="xuF-YT-SEW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BFR-az-NFt">
+                                <rect key="frame" x="186" y="832" width="82" height="30"/>
+                                <state key="normal" title="Paper plane"/>
+                                <connections>
+                                    <action selector="tapPaperPlane:" destination="H7S-M6-GDF" eventType="touchUpInside" id="GNP-ae-J0s"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3Fu-z5-PeD" firstAttribute="top" secondItem="8ja-Ds-1K9" secondAttribute="top" id="Fvi-i1-PeP"/>
+                            <constraint firstItem="8ja-Ds-1K9" firstAttribute="leading" secondItem="BFR-az-NFt" secondAttribute="trailing" constant="8" id="IPN-cC-npH"/>
+                            <constraint firstItem="3Iw-pp-DeH" firstAttribute="bottom" secondItem="3Fu-z5-PeD" secondAttribute="bottom" id="bxA-Ja-1Ys"/>
+                            <constraint firstItem="8ja-Ds-1K9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3Iw-pp-DeH" secondAttribute="leading" symbolic="YES" id="jcM-Km-Y4O"/>
+                            <constraint firstItem="8ja-Ds-1K9" firstAttribute="top" secondItem="BFR-az-NFt" secondAttribute="top" id="k8d-P8-dkT"/>
+                            <constraint firstItem="3Iw-pp-DeH" firstAttribute="trailing" secondItem="3Fu-z5-PeD" secondAttribute="trailing" constant="26" id="szh-xb-MnP"/>
+                            <constraint firstItem="3Fu-z5-PeD" firstAttribute="leading" secondItem="8ja-Ds-1K9" secondAttribute="trailing" constant="12" id="tGH-UP-zoA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="3Iw-pp-DeH"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HMk-ii-oj6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5615.9420289855079" y="119.86607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4xE-TP-aNf">

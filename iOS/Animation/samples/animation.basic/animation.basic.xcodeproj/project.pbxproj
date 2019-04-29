@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42625D48227570B200A30FD5 /* DrawLayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42625D47227570B200A30FD5 /* DrawLayerViewController.swift */; };
+		426C4E4822768D5D00F10AD2 /* AnimatioinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C4E4722768D5D00F10AD2 /* AnimatioinViewController.swift */; };
 		4291FF7A2272CC9D00126015 /* AffineTransformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4291FF792272CC9D00126015 /* AffineTransformViewController.swift */; };
 		42D4DA6F2271836700DDA890 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D4DA6E2271836700DDA890 /* AppDelegate.swift */; };
 		42D4DA712271836700DDA890 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D4DA702271836700DDA890 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		42625D47227570B200A30FD5 /* DrawLayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawLayerViewController.swift; sourceTree = "<group>"; };
+		426C4E4722768D5D00F10AD2 /* AnimatioinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatioinViewController.swift; sourceTree = "<group>"; };
 		4291FF792272CC9D00126015 /* AffineTransformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffineTransformViewController.swift; sourceTree = "<group>"; };
 		42D4DA6B2271836700DDA890 /* animation.basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = animation.basic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42D4DA6E2271836700DDA890 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 			path = Layer.Draw;
 			sourceTree = "<group>";
 		};
+		426C4E4622768D4500F10AD2 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				426C4E4722768D5D00F10AD2 /* AnimatioinViewController.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		42D4DA622271836700DDA890 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 		42D4DA6D2271836700DDA890 /* animation.basic */ = {
 			isa = PBXGroup;
 			children = (
+				426C4E4622768D4500F10AD2 /* Animation */,
 				42D4DA802271838400DDA890 /* BoundsAndFrame */,
 				42625D462275709100A30FD5 /* Layer.Draw */,
 				42D4DA6E2271836700DDA890 /* AppDelegate.swift */,
@@ -163,6 +174,7 @@
 				42D4DA82227183B600DDA890 /* BoundsAndFrameView.swift in Sources */,
 				42D4DA712271836700DDA890 /* ViewController.swift in Sources */,
 				4291FF7A2272CC9D00126015 /* AffineTransformViewController.swift in Sources */,
+				426C4E4822768D5D00F10AD2 /* AnimatioinViewController.swift in Sources */,
 				42D4DA6F2271836700DDA890 /* AppDelegate.swift in Sources */,
 				42625D48227570B200A30FD5 /* DrawLayerViewController.swift in Sources */,
 			);
