@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:id="@+id/constraint_layout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_dimen_ratio"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintDimensionRatio="3:1"
+        android:text="A"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_percent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_dimen_ratio"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_dimen_ratio"
+        app:layout_constraintBottom_toBottomOf="@id/tv_dimen_ratio"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:text="B"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_light"/>
+    
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dimen_ratio"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"/>
+    
+    <TextView
+        android:id="@+id/tv_barrier_a"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_dimen_ratio"
+        app:layout_constraintTop_toBottomOf="@id/tv_dimen_ratio"
+        android:layout_marginTop="20dp"
+        android:text="A"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_barrier_b"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_barrier_a"
+        app:layout_constraintTop_toBottomOf="@id/tv_barrier_a"
+        android:layout_marginTop="10dp"
+        android:text="B"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+    
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="tv_barrier_a, tv_barrier_b"/>
+
+    <TextView
+        android:id="@+id/tv_barrier_c"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/barrier_vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_barrier_a"
+        app:layout_constraintBottom_toBottomOf="@id/tv_barrier_b"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5"
+        android:text="C"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_barrier_b"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_gone_margin_a"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_barrier_b"
+        android:layout_marginTop="20dp"
+        android:text="A"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_gone_margin_b"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_gone_margin_a"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_barrier_b"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        app:layout_goneMarginLeft="10dp"
+        android:text="Gone Left"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_gone_margin_b"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_group_controller"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_gone_margin_b"
+        android:layout_marginTop="20dp"
+        android:text="Gone Group"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_group_a"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_group_controller"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toTopOf="@id/tv_group_controller"
+        android:text="A"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_group_b"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_group_a"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toTopOf="@id/tv_group_controller"
+        android:text="B"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_group_a, tv_group_b"/>
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_group_controller"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_chain_a"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintRight_toLeftOf="@id/tv_chain_vote_a"
+        app:layout_constraintTop_toBottomOf="@id/tv_group_controller"
+        android:layout_marginTop="20dp"
+        android:text="A"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_chain_vote_a"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_chain_a"
+        app:layout_constraintRight_toLeftOf="@id/tv_chain_vs"
+        app:layout_constraintTop_toTopOf="@id/tv_chain_a"
+        app:layout_constraintHorizontal_weight="3"
+        android:text="1000"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_chain_vs"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_chain_vote_a"
+        app:layout_constraintRight_toLeftOf="@id/tv_chain_vote_b"
+        app:layout_constraintTop_toTopOf="@id/tv_chain_a"
+        android:text="VS"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_chain_vote_b"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_chain_vs"
+        app:layout_constraintRight_toLeftOf="@id/tv_chain_b"
+        app:layout_constraintTop_toTopOf="@id/tv_chain_a"
+        app:layout_constraintHorizontal_weight="2"
+        android:text="2000"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_chain_b"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_chain_vote_b"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toTopOf="@id/tv_chain_a"
+        android:text="B"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_animation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Animate"
+        android:gravity="center"
+        android:background="@android:color/holo_green_light"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
