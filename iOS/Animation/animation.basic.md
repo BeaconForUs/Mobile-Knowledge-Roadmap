@@ -14,8 +14,8 @@
         - [X] transform
     - [X] 绘图
 - [ ] Core Animation
-    - [ ] CABasicAnimation
-    - [ ] CAKeyFrameAnimation
+    - [X] CABasicAnimation
+    - [X] CAKeyframeAnimation
     - [ ] CAAnimationGroup
     - [ ] CADisplayLink
     - [ ] 交互动画
@@ -265,11 +265,258 @@ class DrawLayerViewController: UIViewController {
 
 ## Core Animation
 
+Core Animation主要的接口和类关系如下图：
+
+![CA类图](res/CAAnimation.hierarchy.png)
+
+推荐看一遍Apple官方文档[Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514)
+
 ### CABasicAnimation
 
-### CAKeyFrameAnimation
+`CAPropertiAnimation`提供了基于`keyPath`的动画，它作为一个基类，是不能直接使用的。
+
+#### keyPath
+
+`keyPath`指的就是layer的那些支持动画的属性。所有带隐式动画的属性都包含在内。
+
+| keyPath              | Description                                                                |
+| :------------------- | :------------------------------------------------------------------------- |
+| anchorPoint          | 修改锚点，就是修改`frame`                                                  |
+| backgroundColor      | 背景色                                                                     |
+| borderColor          | 边框颜色                                                                   |
+| borderWidth          | 边框宽度                                                                   |
+| bounds               | 大小，不会影响中心点，这个不受`anchorPoint`影响, 另外，**frame不支持动画** |
+| cornerRadius         | 圆角                                                                       |
+| contents             | 寄宿图, 不过用这个做动画感觉有点怪, `UIImageView`本身就支持动画            |
+| contentsRect         | 同上，有点怪，但是它就是带隐式动画                                         |
+| mask                 | 蒙版                                                                       |
+| maskToBounds         | 是否裁剪边界                                                               |
+| opacity              | 透明度                                                                     |
+| position             | 中心点                                                                     |
+| shadowColor          | 阴影那几个属性都可以，后面不列举了，太啰嗦了                               |
+| transform.scale      | 缩放                                                                       |
+| transform.scale.x    | 水平方向的缩放                                                             |
+| transform.scale.y    | 竖直方向的缩放                                                             |
+| transform.rotation.x | 沿x轴旋转                                                                  |
+| transform.rotation.y | 沿y轴旋转                                                                  |
+| transform.rotation.z | 沿z轴旋转                                                                  |
+
+
+#### 关闭隐式动画
+
+下面这段代码，展示了一个红色的圆背景色变成蓝色的动画。
+
+```Swift
+class AnimatioinViewController: UIViewController {
+    
+    private var animationLayer: CALayer?
+
+    @IBAction func tapAnimation(_ sender: UIButton) {
+        animationLayer?.removeFromSuperlayer()
+        animationLayer?.removeAllAnimations()
+        let layer = CALayer()
+        layer.frame = CGRect(x: UIScreen.main.bounds.size.width / 2.0 - 100.0,
+                             y: UIScreen.main.bounds.size.height / 2.0 - 100.0,
+                             width: 200.0,
+                             height: 200.0)
+        view.layer.addSublayer(layer)
+        layer.cornerRadius = 100.0
+        layer.masksToBounds = true
+        layer.backgroundColor = UIColor.red.cgColor
+        animationLayer = layer
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let animation = CABasicAnimation(keyPath: "backgroundColor")
+            animation.toValue = UIColor.blue.cgColor
+            animation.duration = 1
+            animation.delegate = self
+            layer.add(animation, forKey: nil)
+        }
+    }
+}
+
+extension AnimatioinViewController: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if let layer = animationLayer, let animation = anim as? CABasicAnimation {
+            layer.backgroundColor = animation.toValue as! CGColor
+        }
+    }
+}
+````
+
+不贴运行效果了，太丑。
+
+最后一段代码，在动画结束的时候，把颜色保持在动画的`toValue`指定的颜色。
+执行一下，可以看到一个很怪异的效果：动画结束时候，颜色重新会到红色，然后展示了一个很短的动画效果，变成了蓝色。这个是因为我们之前提到的`backgroundColor`支持隐式动画。
+解决这个，需要用代码禁止隐式动画。
+
+```Swift
+extension AnimatioinViewController: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if let layer = animationLayer, let animation = anim as? CABasicAnimation {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            layer.backgroundColor = animation.toValue as! CGColor
+            CATransaction.commit()
+        }
+    }
+}
+```
+
+**遇到一个问题：**
+看下这句话
+```Swift
+layer.backgroundColor = animation.toValue as! CGColor
+```
+
+通常我不喜欢用强制解包，我的习惯会是这样写：
+
+```Swift
+if let layer = animationLayer, 
+   let animation = anim as? CABasicAnimation, 
+   let finalColor = animation.toValue as? CGColor {
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
+    layer.backgroundColor = finalColor
+    CATransaction.commit()
+}
+```
+
+但是Xcode编译报错，说是`let finalColor = animation.toValue as? CGColor`这个转换永远会成功，不应该用`as?`，但是我去掉`as?`，编译会报错，说不能从`Any?`直接转成`CGColor`, 改成现在的样子，Xcode又会薄警告。好烦。
+
+
+### CAKeyframeAnimation
+
+同样作为`CAPropertyAnimation`的子类，`CAKeyframeAnimation`接受一组值来呈现动画，这是它比`CABasicAnimation`强大的地方。
+还用上面那个动画作为例子：
+
+```Swift
+class AnimatioinViewController: UIViewController {
+    
+    private weak var animationLayer: CALayer!
+    private var randomColor: CGColor {
+        let red = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let green = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let blue = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        return UIColor(red: red, green: green, blue: blue, alpha: 1.0).cgColor
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        setupAnimationLayer()
+    }
+
+    ......    
+
+    @IBAction func tapKeyframe(_ sender: UIButton) {
+        animationLayer.removeAllAnimations()
+        let animation = CAKeyframeAnimation(keyPath: "backgroundColor")
+        animation.values = [randomColor, randomColor, randomColor, randomColor, randomColor]
+        animation.duration = 7
+        animation.delegate = self
+        self.animationLayer.add(animation, forKey: nil)
+    }
+    
+    private func setupAnimationLayer() {
+        let layer = CALayer()
+        layer.frame = CGRect(x: UIScreen.main.bounds.size.width / 2.0 - 100.0,
+                             y: UIScreen.main.bounds.size.height / 2.0 - 100.0,
+                             width: 200.0,
+                             height: 200.0)
+        view.layer.addSublayer(layer)
+        layer.cornerRadius = 100.0
+        layer.masksToBounds = true
+        layer.backgroundColor = UIColor.red.cgColor
+        animationLayer = layer
+    }
+}
+
+extension AnimatioinViewController: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if let layer = animationLayer, let animation = anim as? CABasicAnimation {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            layer.backgroundColor = animation.toValue as! CGColor
+            CATransaction.commit()
+        } else if let layer = animationLayer, let animation = anim as? CAKeyframeAnimation {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            layer.backgroundColor = animation.values?.last as! CGColor
+            CATransaction.commit()
+        }
+
+    }
+}
+```
+
+`CAKeyframeAnimation`让人喜欢之处在于，它对关键帧的多重控制方式。除了例子中使用的`values`之外，它还可以通过`path`来控制动画，以及`keyTimes`, `timingFunctions`, `calculationMode`来控制动画的曲线。
+
+再来看个例子：
+
+```Swift
+    private func setupPaperPlane() {
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 100, y: 50))
+        path.addLine(to: CGPoint(x: 23, y: 18))
+        path.addLine(to: CGPoint(x: 25, y: 40))
+        path.addLine(to: CGPoint(x: 100, y: 50))
+        path.addLine(to: CGPoint(x: 18, y: 55))
+        path.addLine(to: CGPoint(x: 3, y: 100))
+        path.addLine(to: CGPoint(x: 100, y: 50))
+        path.addLine(to: CGPoint(x: 45, y: 95))
+        path.addLine(to: CGPoint(x: 40, y: 82))
+        path.move(to: CGPoint(x: 25, y: 40))
+        path.addLine(to: CGPoint(x: 35, y: 55))
+        let layer = CAShapeLayer()
+        layer.path = path
+        layer.strokeColor = UIColor.gray.cgColor
+        layer.fillColor = UIColor.white.cgColor
+        layer.lineWidth = 2.1
+        layer.lineJoin = .round
+        view.layer.addSublayer(layer)
+        layer.position = CGPoint(x: 20, y: 200)
+        paperPlane = layer
+    }
+```
+
+先画个纸飞机，不是太好看，大家包涵。
+
+![纸飞机](res/animation.keyframe.paperplane.png)
+
+然后用贝塞尔曲线模拟一个飞行的线路：
+
+```Swift
+    @IBAction func tapPaperPlane(_ sender: UIButton) {
+        paperPlane.removeAllAnimations()
+        paperPlane.isHidden = false
+        animationLayer.isHidden = true
+        
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: paperPlane.position)
+        bezierPath.addCurve(to: CGPoint(x: 150, y: 600), controlPoint1: CGPoint(x: 300, y: 300), controlPoint2: CGPoint(x: 80, y: 440))
+        animation.path = bezierPath.cgPath
+        animation.duration = 7
+        animation.rotationMode = .rotateAuto
+        self.paperPlane.add(animation, forKey: nil)
+    }
+```
+
+注意这行代码：
+
+```Swift
+animation.rotationMode = .rotateAuto
+```
+
+它的作用是让动画自动按照路径的切线调整方向。
+可以注释这句话对比看下效果。
+
+![纸飞机录屏](res/animation.keyframe.paperplane.gif)
 
 ### CAAnimationGroup
+
+
 
 ### CADisplayLink
 
