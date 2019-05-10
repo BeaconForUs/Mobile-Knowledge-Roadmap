@@ -471,6 +471,6 @@ remoteInfo | String | | Tareget name
 <br>
 <br>
 
-最后放个图，许多描述不专业，凑合看吧
+最后放个图，许多描述不专业，希望各路大神指正
 
 <img src="res/pbxproj.svg">
