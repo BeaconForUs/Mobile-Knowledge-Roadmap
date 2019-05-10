@@ -1,6 +1,6 @@
 ## pbxproj （Project Builder XCode Project）
 
-pbxproj是一种比较古老的plist配置文件格式，其中包含了几乎所有工程编译所需相关的信息，看起来比较恶心，可以通过 Mac 自带工具将 plutil 转为 JSON 或 XML，格式看起来是清爽了，但是pbxproj中的注释就没有了，看起来也不是很方便。在pbxproj中大部分配置都是以 UUID-value 形式呈现的，配置项通过 UUID 引用相互关联，所有 UUID 后都会跟一个注释来表明通过该 UUID 引用的是个什么东西。
+pbxproj是一种旧风格的plist文件格式，其中包含了几乎所有工程编译所需相关的信息，看起来比较恶心(不知道这个格式为什么一直沿用至今，可能是懒得换吧)，可以通过 Mac 自带工具将 plutil 转为 JSON 或 XML，格式看起来是清爽了，但是pbxproj中的注释就没有了，看起来也不是很方便。在pbxproj中大部分配置都是以 UUID-value 形式呈现的，配置项通过 UUID 引用相互关联，所有 UUID 后都会跟一个注释来表明通过该 UUID 引用的是个什么东西。
 
 ### 基本结构
 
