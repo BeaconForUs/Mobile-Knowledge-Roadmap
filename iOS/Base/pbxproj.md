@@ -447,7 +447,7 @@ name | String | | 配置项的名称
 
 #### PBXContainerItemProxy section
 
-看起来是对于Target的包装，根据ContainerItemProxy 以及 remoteGlobalIDString 不知道是不是各Target 及 App Extension 间调用时查找使用，或者供系统调用使用，瞎猜的，不知道，请大神们指正
+看起来是对于Target的包装，根据ContainerItemProxy 以及 remoteGlobalIDString 不知道是不是各Target 及 App Extension 间调用时查找使用，瞎猜的，不知道，请大神们指正
 
 ```
 6145A4C8227FCEAD00814412 /* PBXContainerItemProxy */ = {
