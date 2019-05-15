@@ -235,11 +235,20 @@
                                     <action selector="tapPaperPlane:" destination="H7S-M6-GDF" eventType="touchUpInside" id="GNP-ae-J0s"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gop-Bo-meq">
+                                <rect key="frame" x="345" y="794" width="43" height="30"/>
+                                <state key="normal" title="Group"/>
+                                <connections>
+                                    <action selector="tapGroup:" destination="H7S-M6-GDF" eventType="touchUpInside" id="qAA-S4-Hzx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Fu-z5-PeD" firstAttribute="top" secondItem="8ja-Ds-1K9" secondAttribute="top" id="Fvi-i1-PeP"/>
+                            <constraint firstItem="3Fu-z5-PeD" firstAttribute="trailing" secondItem="gop-Bo-meq" secondAttribute="trailing" id="Gt6-y9-lmg"/>
                             <constraint firstItem="8ja-Ds-1K9" firstAttribute="leading" secondItem="BFR-az-NFt" secondAttribute="trailing" constant="8" id="IPN-cC-npH"/>
+                            <constraint firstItem="3Fu-z5-PeD" firstAttribute="top" secondItem="gop-Bo-meq" secondAttribute="bottom" constant="8" id="Svz-bd-qGx"/>
                             <constraint firstItem="3Iw-pp-DeH" firstAttribute="bottom" secondItem="3Fu-z5-PeD" secondAttribute="bottom" id="bxA-Ja-1Ys"/>
                             <constraint firstItem="8ja-Ds-1K9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3Iw-pp-DeH" secondAttribute="leading" symbolic="YES" id="jcM-Km-Y4O"/>
                             <constraint firstItem="8ja-Ds-1K9" firstAttribute="top" secondItem="BFR-az-NFt" secondAttribute="top" id="k8d-P8-dkT"/>

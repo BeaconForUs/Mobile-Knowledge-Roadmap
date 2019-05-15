@@ -19,7 +19,7 @@ class AnimatioinViewController: UIViewController {
         let blue = CGFloat(arc4random()) / CGFloat(UInt32.max)
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0).cgColor
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,7 +36,7 @@ class AnimatioinViewController: UIViewController {
         animation.toValue = UIColor.blue.cgColor
         animation.duration = 2
         animation.delegate = self
-        self.animationLayer.add(animation, forKey: nil)
+        animationLayer.add(animation, forKey: nil)
     }
     
     @IBAction func tapKeyframe(_ sender: UIButton) {
@@ -47,23 +47,31 @@ class AnimatioinViewController: UIViewController {
         animation.values = [randomColor, randomColor, randomColor, randomColor, randomColor]
         animation.duration = 7
         animation.delegate = self
-        self.animationLayer.add(animation, forKey: nil)
+        animationLayer.add(animation, forKey: nil)
     }
     
     @IBAction func tapPaperPlane(_ sender: UIButton) {
         paperPlane.removeAllAnimations()
         paperPlane.isHidden = false
         animationLayer.isHidden = true
+
+        let animation = pathAnimation(origin: paperPlane.position)
+        paperPlane.add(animation, forKey: nil)
+    }
+    
+    @IBAction func tapGroup(_ sender: UIButton) {
+        paperPlane.removeAllAnimations()
+        paperPlane.isHidden = false
+        animationLayer.isHidden = true
         
-        let animation = CAKeyframeAnimation(keyPath: "position")
-        let bezierPath = UIBezierPath()
-        bezierPath.move(to: paperPlane.position)
-        bezierPath.addCurve(to: CGPoint(x: 150, y: 600), controlPoint1: CGPoint(x: 300, y: 300), controlPoint2: CGPoint(x: 80, y: 440))
-        animation.path = bezierPath.cgPath
-        animation.duration = 4
-        animation.calculationMode = .cubic
-        animation.rotationMode = .rotateAuto
-        self.paperPlane.add(animation, forKey: nil)
+        let flyAnimation = pathAnimation(origin: paperPlane.position)
+        let zoomAnimation = scaleAnimation()
+        let zoomAnimation2 = scaleAnimation2()
+
+        let group = CAAnimationGroup()
+        group.animations = [flyAnimation, zoomAnimation, zoomAnimation2]
+        group.duration = 2.7
+        paperPlane.add(group, forKey: nil)
     }
     
     private func setupAnimationLayer() {
@@ -103,6 +111,38 @@ class AnimatioinViewController: UIViewController {
         layer.position = CGPoint(x: 20, y: 200)
         paperPlane = layer
     }
+    
+    private func pathAnimation(origin: CGPoint) -> CAAnimation {
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: origin)
+        let endPoint = CGPoint(x: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height - 100)
+        bezierPath.addCurve(to: endPoint, controlPoint1: CGPoint(x: 300, y: 300), controlPoint2: CGPoint(x: 80, y: 440))
+        animation.path = bezierPath.cgPath
+        animation.duration = 2.7
+        animation.calculationMode = .cubic
+        animation.rotationMode = .rotateAuto
+        
+        return animation
+    }
+    
+    private func scaleAnimation() -> CAAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.duration = 1.2
+        animation.toValue = 0.5
+        
+        return animation
+    }
+    
+    private func scaleAnimation2() -> CAAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.duration = 1.5
+        animation.beginTime = 1.2
+        animation.fromValue = 0.5
+        animation.toValue = 0.35
+        
+        return animation
+    }
 }
 
 extension AnimatioinViewController: CAAnimationDelegate {
@@ -110,12 +150,12 @@ extension AnimatioinViewController: CAAnimationDelegate {
         if let layer = animationLayer, let animation = anim as? CABasicAnimation {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            layer.backgroundColor = animation.toValue as! CGColor
+            layer.backgroundColor = (animation.toValue as! CGColor)
             CATransaction.commit()
         } else if let layer = animationLayer, let animation = anim as? CAKeyframeAnimation {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            layer.backgroundColor = animation.values?.last as! CGColor
+            layer.backgroundColor = (animation.values?.last as! CGColor)
             CATransaction.commit()
         }
 
