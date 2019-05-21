@@ -13,14 +13,13 @@
         - [X] content
         - [X] transform
     - [X] 绘图
-- [ ] Core Animation
+- [X] Core Animation
     - [X] CABasicAnimation
     - [X] CAKeyframeAnimation
-    - [ ] CAAnimationGroup
-    - [ ] CADisplayLink
-    - [ ] 交互动画
+    - [X] CAAnimationGroup
+    - [X] CADisplayLink
     - [X] CGAffineTransform和矩阵变换
-- [ ] 番外篇
+- [X] 番外篇
 
 ## CALayer
 
@@ -516,11 +515,69 @@ animation.rotationMode = .rotateAuto
 
 ### CAAnimationGroup
 
+现在实现一个纸飞机越飞越远的动画。方法是在上一节的关键帧动画上增加一个缩小的动画。`CAAnimationGroup`就是用于这种组合动画的。
 
+来看代码
+
+```Swift
+    @IBAction func tapGroup(_ sender: UIButton) {
+        paperPlane.removeAllAnimations()
+        paperPlane.isHidden = false
+        animationLayer.isHidden = true
+        
+        let flyAnimation = pathAnimation(origin: paperPlane.position)
+        let zoomAnimation = scaleAnimation()
+        let zoomAnimation2 = scaleAnimation2()
+
+        let group = CAAnimationGroup()
+        group.animations = [flyAnimation, zoomAnimation, zoomAnimation2]
+        group.duration = 2.7
+        paperPlane.add(group, forKey: nil)
+    }
+
+    private func pathAnimation(origin: CGPoint) -> CAAnimation {
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: origin)
+        let endPoint = CGPoint(x: UIScreen.main.bounds.width, y: UIScreen.main.bounds.height - 100)
+        bezierPath.addCurve(to: endPoint, controlPoint1: CGPoint(x: 300, y: 300), controlPoint2: CGPoint(x: 80, y: 440))
+        animation.path = bezierPath.cgPath
+        animation.duration = 2.7
+        animation.calculationMode = .cubic
+        animation.rotationMode = .rotateAuto
+        
+        return animation
+    }
+    
+    private func scaleAnimation() -> CAAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.duration = 1.2
+        animation.toValue = 0.5
+        
+        return animation
+    }
+    
+    private func scaleAnimation2() -> CAAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.duration = 1.5
+        animation.beginTime = 1.2
+        animation.fromValue = 0.5
+        animation.toValue = 0.35
+        
+        return animation
+    }
+```
+
+![纸飞机录屏](res/animation.keyframe.paperplane.group.gif)
+
+> 动画看起来磨磨蹭蹭，是转成gif的影响。
 
 ### CADisplayLink
 
-### 交互动画
+简单说一下`CADisplayLink`，它不是CAAnimation动画类的一员。它的特别之处在于iOS做完屏幕渲染之后就会调用它。iOS是60桢每秒，`CADisplayLink`可以用于做逐桢动画。
+它和`NSTimer`相比更精确一些。同时注意它和`NSTimer`类似，都会被Runloop强引用，所以要注意调用它的`invalidate`来释放它。
+
+
 
 ### CGAffineTransform和矩阵变换
 在写这一篇之前，我企图重新学一下线性代数中矩阵相关的知识，但是可耻的失败了。也许我还会去继续挑战它，但是这篇文章不想再拖下去了，我就无耻的忽略理论直接讲了。如果这篇文章有幸被哪位高手看到，且高手实在是不能忍受我的错误百出而加以指点，那就很开心了。
@@ -771,15 +828,25 @@ CGFloat m41（x平移）, m42（y平移）, m43（z平移）, m44（）;
 
 
 ### 番外篇
+
 写这样一章，是因为有一些不确定放在哪里合适的内容。有些内容可能不太成系统，但是值得写一下。
+
 #### UIView的drawRect
+
 `UIView`有个方法`open func draw(_ rect: CGRect)`
 是很省事儿的自己绘制View的方法。但是我通常不建议通过它来进行绘制，而是建议用layer来实现。
 因为该方法，会在内存中为rect申请一个buffer(实际就是寄宿图，寄宿图在CALayer时候讲过)，大小是`rect.size` * `contentsScale` * 4。所以当你企图做全屏绘制的时候，内存的消耗会相当大。
 另外，如果你实现了`CALayerDelegate`，但是没有实现`displayLayer`，那么就会尝试调用`- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx`。结果和`drawRect`是一样的
 
+### 后记
+
+开始写之后发现，动画这个话题太大了，都可以写一个系列的文章了。我想这篇文章就完结于此，以后有时间争取多写几篇，也争取能实现一些好看的例子。主要是创意和美工，很大的瓶颈啊。
+
+
 ### 参考资料
+
 [绘制像素到屏幕上](https://objccn.io/issue-3-1/)
+
 [iOS开发系列--让你的应用“动”起来](http://www.cnblogs.com/kenshincui/p/3972100.html)
 
 
